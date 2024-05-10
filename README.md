@@ -6,7 +6,6 @@
 3. docker compose exec app composer install
 4. docker compose exec npm install
 
-
 ## Environment file
 copy `.env.example` to `.env` and fill the setting if needed
 

@@ -1,7 +1,6 @@
 FROM php:8.2.11-fpm
 
-# Install composer
-RUN echo "\e[1;33mInstall COMPOSER\e[0m"
+RUN echo "Installing composer"
 RUN cd /tmp \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
@@ -14,7 +13,6 @@ RUN apt-get update
 RUN apt-get -y install apt-utils nano wget dialog vim
 
 # Install important libraries
-RUN echo "\e[1;33mInstall important libraries\e[0m"
 RUN apt-get -y install --fix-missing \
     apt-utils \
     build-essential \
@@ -30,17 +28,18 @@ RUN apt-get -y install --fix-missing \
     libmcrypt-dev \
     libicu-dev \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
     
-# RUN echo "\e[1;33mInstall important docker dependencies\e[0m"
-# RUN docker-php-ext-install \
+
+RUN docker-php-ext-install \
+     curl \
+     xml \
+
 #     exif \
 #     pcntl \
 #     bcmath \
 #     ctype \
-#     curl \
 #     iconv \
-#     xml \
 #     soap \
 #     pcntl \
 #     mbstring \
@@ -48,6 +47,9 @@ RUN apt-get -y install --fix-missing \
 #     bz2 \
 #     zip \
 #     intl
+
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs npm
 
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev \
