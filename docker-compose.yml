@@ -28,6 +28,7 @@ services:
       - ./src:/var/www
     ports:
       - ${APP_PORT:-9001}:9000
+      - ${VITE_PORT:-5173}:5173
     working_dir: /var/www
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
