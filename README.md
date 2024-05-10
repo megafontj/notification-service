@@ -16,11 +16,11 @@ MYSQL_PASSWORD=your-password
 
 PHPMYADMIN_PORT=3400 # set port for phpmyadmin if 3400 is used by another app
 NGINX_PORT=8080 # port for nginx
-DB_PORT=3306 # 
-APP_PORT=9001
+DB_PORT=3306 # port for database
+APP_PORT=9001 # port for laravel app 
 ```
 
 ## Laravel
 Laravel is inside the `src` folder. If you want to run artisan command use this command:
 
-`docker compose exec app php artisan {your command}'
+`docker compose exec app php artisan {your command}`
