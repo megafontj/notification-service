@@ -19,3 +19,34 @@ paths:
                 type: array
                 items:
                   type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    PathId:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: Числовой id
+      example: 1
+    QueryInclude:
+      in: query
+      name: include
+      required: false
+      description: Relationships
+      schema:
+        type: string
+  schemas:
+    EmptyResource:
+      type: object
+      properties:
+        data:
+          type: object
+          nullable: true
+          example: null
