@@ -10,5 +10,5 @@ interface SearchQueryInterface
 
     public function filter(array $value, string $table): Builder;
 
-    public function include(string $value): Builder;
+    public function include(array $value): Builder;
 }

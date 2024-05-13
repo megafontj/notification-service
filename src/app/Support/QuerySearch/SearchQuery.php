@@ -5,6 +5,7 @@ namespace App\Support\QuerySearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 final class SearchQuery implements SearchQueryInterface
 {
@@ -21,9 +22,9 @@ final class SearchQuery implements SearchQueryInterface
     {
         $this->builder = $builder;
 
-        foreach ($this->request->all() as $name => $value) {
-            if (method_exists($this, $name)) {
-                call_user_func_array([$this, $name], array_filter([$value, $table]));
+        foreach ($this->request->only('sort', 'include', 'filter') as $name => $value) {
+            if (method_exists($this, $name) && count($value) > 0) {
+                call_user_func_array([$this, $name], [$value, $table]);
             }
         }
 
@@ -51,21 +52,31 @@ final class SearchQuery implements SearchQueryInterface
         $filters = array_unique($value);
 
         foreach ($filters as $column => $val) {
-            $colInTable = ltrim($column, '*');
-            if ($column[0] === '*' && Schema::hasColumn($table, $colInTable)) {
-                $this->builder->where($colInTable, $val);
-            } else if (Schema::hasColumn($table, $colInTable)) {
+            [$isLikeSearch, $colInTable] = $this->isLikeSearchColumn($column);
+            if ($isLikeSearch && Schema::hasColumn($table, $colInTable)) {
                 $this->builder->where($colInTable, 'like', "%$val%");
+            } else if (Schema::hasColumn($table, $colInTable)) {
+                $this->builder->where($colInTable, $val);
             }
         }
 
         return $this->builder;
     }
 
-    public function include($value): Builder
+    public function include(array $value): Builder
     {
-        $this->builder->with(explode(',', $value));
+        $this->builder->with($value);
 
         return $this->builder;
+    }
+
+
+    private function isLikeSearchColumn(string $column): array
+    {
+        if (Str::contains($column, 'like_')) {
+            return [true, str_replace('like_', '', $column)];
+        }
+
+        return [false, $column];
     }
 }
