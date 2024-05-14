@@ -1,0 +1,50 @@
+ReadOnlyProperties:
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 1
+      description: ID Tweet
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+
+UsersFillableProperties:
+  type: object
+  properties:
+    content:
+      type: string
+      description: Tweet text
+    user_id:
+      type: string
+      description: User id from Account service
+Tweet:
+  allOf:
+    - $ref: '#/ReadOnlyProperties'
+    - $ref: '#/UsersFillableProperties'
+
+TweetCreateRequest:
+  $ref: '#/UsersFillableProperties'
+
+TweetUpdateRequest:
+  type: object
+  properties:
+    content:
+      type: string
+
+TweetResponse:
+  type: object
+  properties:
+    data:
+      $ref: '#/Tweet'
+
+TweetsResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: '#/Tweet'
