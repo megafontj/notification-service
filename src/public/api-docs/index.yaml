@@ -50,3 +50,15 @@ components:
           type: object
           nullable: true
           example: null
+    SearchResourceRequest:
+      type: object
+      properties:
+        filter:
+          type: object
+          properties:
+            name:
+              type: string
+        include:
+          type: array
+        sort:
+          type: array
