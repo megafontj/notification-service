@@ -7,7 +7,7 @@ servers:
   - url: /api
 
 paths:
-  /tweets:search:
+  /tweets/search:
     post:
       tags:
         - Tweets
@@ -105,6 +105,7 @@ paths:
             application/json:
               schema:
                 $ref: './schemas/tweets.yaml#/TweetResponse'
+
 components:
   securitySchemes:
     bearerAuth:

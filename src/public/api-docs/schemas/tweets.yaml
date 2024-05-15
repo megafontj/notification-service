@@ -12,7 +12,7 @@ ReadOnlyProperties:
       type: string
       format: date-time
 
-UsersFillableProperties:
+TweetFillableProperties:
   type: object
   properties:
     content:
@@ -20,14 +20,14 @@ UsersFillableProperties:
       description: Tweet text
     user_id:
       type: string
-      description: User id from Account service
+      description: Tweet id from Account service
 Tweet:
   allOf:
     - $ref: '#/ReadOnlyProperties'
-    - $ref: '#/UsersFillableProperties'
+    - $ref: '#/TweetFillableProperties'
 
 TweetCreateRequest:
-  $ref: '#/UsersFillableProperties'
+  $ref: '#/TweetFillableProperties'
 
 TweetUpdateRequest:
   type: object
